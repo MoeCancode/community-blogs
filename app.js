@@ -4,8 +4,9 @@ const exphbs = require("express-handlebars");
 const path = require("path");
 require("dotenv").config();
 
-const db = require("./config/connection")
-  
+const routes = require("./controllers");
+
+const db = require("./config/connection") 
 
 //Test database connection
   db.authenticate()
@@ -15,8 +16,6 @@ const db = require("./config/connection")
 const app = express();
 const PORT = process.env.PORT || 3200;
 
-app.get("/", (req,res) => {
-    res.send("index");
-});
+app.use(routes);
 
 app.listen(PORT, console.log(`Server started on port: ${PORT}`));

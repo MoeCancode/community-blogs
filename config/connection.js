@@ -1,3 +1,4 @@
+const { appendFile } = require("fs");
 const Sequelize = require("sequelize");
 
 const db = new Sequelize(

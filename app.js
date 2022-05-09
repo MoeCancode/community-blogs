@@ -2,20 +2,40 @@ const express = require("express");
 const mysql = require("mysql2");
 const exphbs = require("express-handlebars");
 const path = require("path");
+const session = require("express-session");
 require("dotenv").config();
+const helpers = require(`./utils/helpers`);
 
 const routes = require("./controllers");
-
-const db = require("./config/connection") 
-
-//Test database connection
-  db.authenticate()
-  .then(() => console.log("Database connected successfully!"))
-  .catch(err => console.log(`We have an error: ${err}`));
+const db = require("./config/connection");
 
 const app = express();
-const PORT = process.env.PORT || 3200;
 
+//Session
+const SequelizeStore = require("connect-session-sequelize")(session.Store);
+const sess = {
+    secret: "Super secret secret",
+    cookie: {},
+    resave: false,
+    saveUninitialized: true,
+    store: new SequelizeStore({
+      db: db,
+    }),
+  };
+
+  app.use(session(sess));
+
+//Handlebars
+const hbs = exphbs.create({ helpers })
+app.engine("handlebars", hbs.engine);
+app.set("view engine", "handlebars");
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, `public`)));
+
+
+const PORT = process.env.PORT || 3200;
 app.use(routes);
 
 app.listen(PORT, console.log(`Server started on port: ${PORT}`));

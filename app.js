@@ -35,6 +35,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, `public`)));
 
 const PORT = process.env.PORT || 3200;
+
 app.use(routes);
 
-app.listen(PORT, console.log(`Server started on port: ${PORT}`));
+db.sync({force:false}).then(() => {
+    app.listen(PORT, console.log(`Server started on port: ${PORT}`));
+})
+

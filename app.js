@@ -14,26 +14,25 @@ const app = express();
 //Session
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 const sess = {
-    secret: "Super secret secret",
-    cookie: {},
-    resave: false,
-    saveUninitialized: true,
-    store: new SequelizeStore({
-      db: db,
-    }),
-  };
+  secret: process.env.SECRET,
+  cookie: {},
+  resave: false,
+  saveUninitialized: true,
+  store: new SequelizeStore({
+    db: db,
+  }),
+};
 
-  app.use(session(sess));
+app.use(session(sess));
 
 //Handlebars
-const hbs = exphbs.create({ helpers })
+const hbs = exphbs.create({ helpers });
 app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, `public`)));
-
 
 const PORT = process.env.PORT || 3200;
 app.use(routes);

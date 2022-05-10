@@ -38,18 +38,12 @@ router.get('/post/:id', async (req, res) => {
             },
             attributes: ["id", "title", "description", "user_id"],
             include: [
-                {
-                    model: User,
-                    attributes: ["username"]
-                },
-                {
-                    model: Comment,
-                    attributes: ["id", "content", "user_id", "blogPost_id"]
-                }
+               Comment, User 
             ]
         })
-
+        console.log("-----------------------+++++++++++++++++++" + specificPost);
         post = specificPost.get({plain: true});
+        // console.log("-----------------------+++++++++++++++++++" + post);
         res.render("Comment", {post, loggedIn: req.session.loggedIn})  
 
     } catch (error) {

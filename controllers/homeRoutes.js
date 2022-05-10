@@ -19,8 +19,6 @@ router.get("/", async (req, res) => {
     });
     const posts = allPosts.map((post) => post.get({ plain: true }));
 
-console.log("MMMMMMMMMMMMMMMMMMMMMMMMMMMM" + posts);
-
     res.render("homepage", { posts, loggedIn: req.session.loggedIn });
   } catch (error) {
     res.status(500).json(error);
@@ -47,34 +45,38 @@ router.get("/post/:id", async (req, res) => {
         attributes: ["id", "content", "user_id", "blogPost_id"],
         include: [User],
       });
-      commentObj = associatedComments.map((cmnt) => cmnt.get({plain: true}));
-
-      console.log("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"+ commentObj +"OOOOOOOOOOOOOOOO"+  postObj)
+      commentObj = associatedComments.map((cmnt) => cmnt.get({ plain: true }));
 
       res.render("Test", {
         postObj,
         commentObj,
         loggedIn: req.session.loggedIn,
       });
+    } else {
+      res.render("Test", {
+        postObj,
+        loggedIn: req.session.loggedIn,
+      });
     }
-    else {
-        res.render("Test", {
-            postObj,
-            loggedIn: req.session.loggedIn
-        })
-    }
-
-    // const theComments = await Comment.findOne({
-    //     where: {
-    //         blogPost_id : req.params.id
-    //     },
-    //     include: [User, BlogPost]
-    // })
-
-    // pageComment = theComments.get({plain: true});
-
-    // res.render("comment", {pageComment, loggedIn: req.session.loggedIn});
   } catch (error) {}
+});
+
+//Create new comment
+router.post("/post/:id", async (req, res) => {
+    console.log("WTHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH")
+  try {
+    console.log("UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU" + req.body);
+    const commentData = await Comment.create({
+      content: req.body.commentContent,
+      user_id: 2,
+      blogPost_id: req.params.id,
+    });
+
+    res.json("Comment added");
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
 });
 
 module.exports = router;

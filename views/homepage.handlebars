@@ -1,8 +1,8 @@
 {{#each posts as |post|}}
-  <div class="card">
-    <a href="/post/{{post.id}}"><h5 class="card-header">{{title}}</h5></a>
+  <div class="card" style="border: 10px solid black; margin: 15px">
+    <a href="/post/{{post.id}}" style="text-decoration: none;"><h5 class="card-header">{{title}}</h5></a>
     <div class="card-body">
-      <h5 class="card-title">Published by {{post.user.username}}</h5>
+      <h6 class="card-title">Published by {{post.user.username}}</h6>
       <p class="card-text">{{description}}</p>
     </div>
   </div>

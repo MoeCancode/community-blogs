@@ -3,18 +3,22 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">{{postObj.title}}</h5>
-        <br>
+        <br />
         <p>{{postObj.user.username}}</p>
       </div>
       <div class="modal-body">
         <p>{{postObj.description}}</p>
       </div>
-      {{#if commentObj.content}}
-      <div class="modal-footer" style="text-align: center;">
-        <h6>{{commentObj.user.username}} <hr></h6>
-        <p>{{commentObj.content}}</p>
-      </div>
-      {{/if}}
+      {{#each commentObj as |cobj|}}
+        <div class="alert alert-success" role="alert">
+          <h6 class="alert-heading">{{cobj.user.username}}</h6>
+          <p>{{cobj.content}}</p>
+          <hr />
+        </div>
+      {{/each}}
+
+        <textarea></textarea>
+        <button>Comment</button>
     </div>
   </div>
 </div>

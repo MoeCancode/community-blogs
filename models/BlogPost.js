@@ -29,6 +29,11 @@ BlogPost.init(
                model: "user",
                key: "id"
            } 
+        },
+        has_comment: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
         }
     },
     {

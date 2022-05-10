@@ -3,5 +3,10 @@
       "title": "How to finish this web application",
       "description": "Try not to start on Sunday next time :)",
       "user_id": 1
+    },
+    {
+      "title": "Clickbait 101",
+      "description": "You will never believe what just happened...",
+      "user_id": 1
     }
 ]

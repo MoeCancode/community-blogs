@@ -41,10 +41,28 @@ router.get('/post/:id', async (req, res) => {
                Comment, User 
             ]
         })
-        console.log("-----------------------+++++++++++++++++++" + specificPost);
-        post = specificPost.get({plain: true});
-        // console.log("-----------------------+++++++++++++++++++" + post);
-        res.render("Comment", {post, loggedIn: req.session.loggedIn})  
+        postObj = specificPost.get({plain: true});
+
+        const associatedComments = await Comment.findOne({
+            where: {
+                blogPost_id: req.params.id
+            },
+            include: [User]
+        })
+        commentObj = associatedComments.get({plain: true}); 
+
+        res.render("Test", {postObj, commentObj, loggedIn: req.session.loggedIn}) 
+        
+        // const theComments = await Comment.findOne({
+        //     where: {
+        //         blogPost_id : req.params.id
+        //     },
+        //     include: [User, BlogPost]
+        // })
+
+        // pageComment = theComments.get({plain: true});
+        
+        // res.render("comment", {pageComment, loggedIn: req.session.loggedIn});
 
     } catch (error) {
         

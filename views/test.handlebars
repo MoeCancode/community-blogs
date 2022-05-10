@@ -1,0 +1,20 @@
+<div class="card" tabindex="-1">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{postObj.title}}</h5>
+        <br>
+        <p>{{postObj.user.username}}</p>
+      </div>
+      <div class="modal-body">
+        <p>{{postObj.description}}</p>
+      </div>
+      {{#if commentObj.content}}
+      <div class="modal-footer" style="text-align: center;">
+        <h6>{{commentObj.user.username}} <hr></h6>
+        <p>{{commentObj.content}}</p>
+      </div>
+      {{/if}}
+    </div>
+  </div>
+</div>
